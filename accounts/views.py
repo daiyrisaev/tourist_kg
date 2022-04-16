@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import UserRegisterForm
 # Create your views here.
 
@@ -22,9 +22,9 @@ def sign_in(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponse('Вы успешно авторизованы')
+                    return redirect('index.html')
                 else:
-                    return  HttpResponse('Аккаунт неактивен')
+                    return HttpResponse('Аккаунт неактивен')
             else:
                 return HttpResponse('Вы ввели неправильные данные')
     else:

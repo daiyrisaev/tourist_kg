@@ -9,6 +9,9 @@ class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
+    class Meta:
+        widgets = {'user_name': forms.TextInput(attrs={'class': 'floatlabel','placeholder':'имя пользователя'}),'password':forms.PasswordInput(attrs={"class":"floatlabel"})}
+
 
 class UserRegisterForm(forms.ModelForm):
     password = forms.CharField(label='password',widget=forms.PasswordInput)

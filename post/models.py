@@ -1,5 +1,8 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
+
 
 class Category(models.Model):
     name = models.CharField('Name', max_length=100)
@@ -14,6 +17,7 @@ class Category(models.Model):
         return self.name
 
 # Create your models here.
+
 
 class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, verbose_name='Категория')
@@ -32,11 +36,18 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-class Coment(models.Model):
-    name = models.CharField(verbose_name='Name', max_length=50)
+
+class Comment(models.Model):
+    author = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="Автор каментарии",related_name="comments",null=True)
     comment = models.TextField(verbose_name='comments')
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created= models.DateTimeField(auto_now_add=True,null=True)
 
+    class Meta:
+        verbose_name = 'камментарий'
+        verbose_name_plural = 'каментарии'
+        ordering=['-created']
 
-
+    def __str__(self):
+        return str(self.comment)[:50]
 
